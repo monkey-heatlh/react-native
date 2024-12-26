@@ -44,7 +44,7 @@ export default function SignUp() {
         code: certification,
       })
       .then((res) => {
-        navigation.navigate("signup2");
+        navigation.navigate("signup2", { email: email });
       })
       .catch((err) => {
         console.log(err);
