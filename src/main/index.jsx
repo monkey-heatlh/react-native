@@ -6,12 +6,15 @@ import { url } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import WhiteBtn from "../components/whiteBtn";
 import PurpleBtn from "../components/purpleBtn";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Main({ email }) {
   const [data, setData] = useState(null);
   const [dateTime, setDateTime] = useState(new Date());
   const [error, setError] = useState(false);
   const [todayContent, setTodayContent] = useState("");
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchTokenAndData = async () => {
@@ -106,7 +109,11 @@ export default function Main({ email }) {
           <Text style={style.todayContent}>{todayContent}</Text>
         </View>
       )}
-      <PurpleBtn label={"맨몸운동 하러가기"} Btnstyle={true} />
+      <PurpleBtn
+        label={"맨몸운동 하러가기"}
+        onPress={() => navigation.navigate("exercise")}
+        Btnstyle={true}
+      />
     </View>
   );
 }
