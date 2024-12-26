@@ -15,11 +15,11 @@ export default function Start() {
       <View style={styles.BtnWrapper}>
         <WhiteBtn
           label="회원가입"
-          onPress={() => navigation.navigate("/signup")}
+          onPress={() => navigation.navigate("signup")}
         />
         <PurpleBtn
           label="로그인"
-          onPress={() => navigation.navigate("/login")}
+          onPress={() => navigation.navigate("login")}
         />
       </View>
     </View>
