@@ -11,7 +11,6 @@ import PurpleBtn from "../components/purpleBtn";
 export default function SignUp() {
   const [active, setActive] = useState(false);
   const [email, setEmail] = useState("");
-  const [error, setError] = useState(false);
   const [next, setNext] = useState(true);
   const [certification, setCertification] = useState("");
   const [Btnstyle, setStyle] = useState(false);
@@ -56,10 +55,7 @@ export default function SignUp() {
       <Text style={style.title}>안녕하세요! {"\n"}이메일로 가입해주세요.</Text>
       <Text>이메일을 입력하여 함께 운동을 해보아요!!</Text>
       <TextInput
-        style={{
-          ...styles.input,
-          borderColor: error ? "#902BE9" : "#A6A6A6",
-        }}
+        style={styles.input}
         placeholder="이메일을 입력해주세요"
         value={email}
         onChangeText={(text) => {
