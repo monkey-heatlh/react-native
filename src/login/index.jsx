@@ -2,6 +2,9 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import { style } from "./style";
 import PurpleBtn from "../components/purpleBtn";
 import { useState } from "react";
+import axios from "axios";
+import { url } from "../../config";
+import { useNavigation } from "@react-navigation/native";
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -10,7 +13,21 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  function Login() {}
+  const navigation = useNavigation();
+  function Login() {
+    if (emailError || passwordError) return;
+    axios
+      .post(`${url}/login`, {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        navigation.navigate("main");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
     <View style={style.Container}>
       <Text style={style.title}>로그인</Text>
@@ -34,6 +51,10 @@ export default function Login() {
         <View style={style.inputWrap}>
           <Text style={style.label}>비밀번호</Text>
           <TextInput
+            onChangeText={(text) => {
+              setPassword(text);
+              setPasswordError(false);
+            }}
             style={styles.input}
             placeholder="비밀번호를 입력해주세요"
           />
