@@ -13,11 +13,6 @@ export const style = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  warn: {
-    color: "#A6A6A6",
-    fontSize: 14,
-    marginTop: 4,
-  },
   inputWrap: {
     gap: 5,
   },
