@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { url } from "../../config";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -22,6 +23,7 @@ export default function Login() {
         password: password,
       })
       .then((res) => {
+        AsyncStorage.setItem("token", res.data.token);
         navigation.navigate("main");
       })
       .catch((err) => {
