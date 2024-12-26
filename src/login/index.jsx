@@ -24,7 +24,7 @@ export default function Login() {
       })
       .then((res) => {
         AsyncStorage.setItem("token", res.data.token);
-        navigation.navigate("main");
+        navigation.navigate("main", { email: email });
       })
       .catch((err) => {
         console.log(err);
