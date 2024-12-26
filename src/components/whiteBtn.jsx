@@ -10,7 +10,7 @@ export default function WhiteBtn({ label, onPress }) {
 
 const styles = StyleSheet.create({
   PurpleBtn: {
-    paddingHorizontal: 134,
+    paddingHorizontal: "auto",
     paddingVertical: 16,
     borderRadius: 10,
     alignItems: "center",
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#902BE9",
+    width: "100%",
   },
   PurpleBtnLabel: {
     color: "#902BE9",
