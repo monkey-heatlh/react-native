@@ -4,41 +4,62 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import WhiteBtn from "../components/whiteBtn";
+import PurpleBtn from "../components/purpleBtn";
 
-export default function Main() {
-  const [userName, setUserName] = useState("");
+export default function Main({ email }) {
+  const [data, setData] = useState(null);
   const [dateTime, setDateTime] = useState(new Date());
+  const [error, setError] = useState(false);
+  const [todayContent, setTodayContent] = useState("");
 
   useEffect(() => {
     const fetchTokenAndData = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
         if (token) {
-          const parsedToken = JSON.parse(token); // 저장된 토큰이 JSON 문자열이라면 파싱 필요
+          const parsedToken = JSON.parse(token);
           const response = await axios.get(`${url}/read`, {
             headers: {
-              Authorization: parsedToken.accessToken, // accessToken 사용
+              Authorization: parsedToken.accessToken,
             },
           });
-          console.log(response.data);
-
-          // 사용자의 이름 등 데이터를 여기서 설정할 수 있습니다.
-          setUserName(response.data.userName || "사용자");
+          setData(response.data);
         }
       } catch (err) {
-        console.error(err);
+        setError(true);
       }
     };
 
     fetchTokenAndData();
 
-    // 현재 시간을 설정 (실시간 갱신 가능)
     const timer = setInterval(() => {
       setDateTime(new Date());
     }, 1000);
 
-    return () => clearInterval(timer); // 컴포넌트 언마운트 시 타이머 정리
+    return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      const weekDays = [
+        "일요일",
+        "월요일",
+        "화요일",
+        "수요일",
+        "목요일",
+        "금요일",
+        "토요일",
+      ];
+      const today = new Date().getDay();
+      const todayKey = `${weekDays[today]} | ${
+        data[`${weekDays[today].toLowerCase()}Content`]
+      }`;
+      setTodayContent(todayKey || "오늘은 설정된 루틴이 없습니다.");
+    }
+  }, [data]);
+
+  const userName = email ? email.split("@")[0] : "사용자";
 
   return (
     <View style={style.Container}>
@@ -54,8 +75,10 @@ export default function Main() {
           source={require("../images/setting.png")}
         />
       </View>
-      <Text style={style.smallTitle}>집에서 편하게</Text>
-      <Text style={style.bigTitle}>정확한 자세로!</Text>
+      <View>
+        <Text style={style.smallTitle}>집에서 편하게</Text>
+        <Text style={style.bigTitle}>정확한 자세로!</Text>
+      </View>
       <View style={style.miniContainer}>
         <View style={style.textWrap}>
           <Text style={style.without}>안녕하세요,</Text>
@@ -76,6 +99,14 @@ export default function Main() {
           </Text>
         </View>
       </View>
+      {error ? (
+        <WhiteBtn label={"루틴 설정하기"} />
+      ) : (
+        <View style={style.contentContainer}>
+          <Text style={style.todayContent}>{todayContent}</Text>
+        </View>
+      )}
+      <PurpleBtn label={"맨몸운동 하러가기"} Btnstyle={true} />
     </View>
   );
 }
