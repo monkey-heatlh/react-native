@@ -16,6 +16,7 @@ export const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
+    gap: 10,
   },
   subTitle: {
     fontSize: 22,
