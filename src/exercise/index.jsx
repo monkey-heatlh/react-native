@@ -4,7 +4,7 @@ import Select from "../components/select";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import PurpleBtn from "../components/purpleBtn";
-import GoBack from "../components/gaback";
+import GoBack from "../components/goback";
 
 export default function Exercise() {
   const [value, setValue] = useState("");

@@ -1,9 +1,11 @@
 import { Image, Text, View } from "react-native";
-import GoBack from "../components/gaback";
+import GoBack from "../components/goback";
 import { style } from "./style";
 import PurpleBtn from "../components/purpleBtn";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Detail({ exercise }) {
+  const navigation = useNavigation();
   const Bool = exercise === "가슴";
   return (
     <View style={style.Container}>
@@ -22,7 +24,11 @@ export default function Detail({ exercise }) {
             : require("../images/flank.png")
         }
       />
-      <PurpleBtn label={"바로 시작"} Btnstyle={true} />
+      <PurpleBtn
+        label={"바로 시작"}
+        Btnstyle={true}
+        onPress={() => navigation.navigate("camera")}
+      />
     </View>
   );
 }
