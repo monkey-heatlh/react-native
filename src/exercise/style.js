@@ -27,15 +27,4 @@ export const style = StyleSheet.create({
     justifyContent: "left",
     gap: 20,
   },
-  goBack: {
-    flexDirection: "row",
-    justifyContent: "left",
-    alignItems: "center",
-    marginTop: 30,
-    marginRight: "auto",
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  },
 });

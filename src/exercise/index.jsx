@@ -4,19 +4,14 @@ import Select from "../components/select";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import PurpleBtn from "../components/purpleBtn";
+import GoBack from "../components/gaback";
 
 export default function Exercise() {
   const [value, setValue] = useState("");
   const navigation = useNavigation();
   return (
     <View style={style.Container}>
-      <TouchableOpacity
-        style={style.goBack}
-        onPress={() => navigation.goBack()}
-      >
-        <Image style={style.icon} source={require("../images/leftArrow.png")} />
-        <Text>뒤로</Text>
-      </TouchableOpacity>
+      <GoBack />
       <View style={style.titleWrap}>
         <Text style={style.title}>무슨 운동을 배워볼까요?</Text>
         <Text style={style.subTitle}>(눌러서 선택)</Text>
