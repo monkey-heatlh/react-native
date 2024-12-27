@@ -46,7 +46,7 @@ export default function Exercise() {
       <PurpleBtn
         label={"다음"}
         Btnstyle={value !== ""}
-        onPress={navigation.navigate("detail", { exercise: value })}
+        onPress={() => navigation.navigate("detail", { exercise: value })}
       />
     </View>
   );
