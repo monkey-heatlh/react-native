@@ -10,10 +10,15 @@ import { url } from "../../config";
 export default function CalendarScreen() {
   const [selectedDate, setSelectedDate] = useState("");
   const [memos, setMemos] = useState([]);
+  const [content, setContent] = useState("");
 
   // 오늘 날짜를 가져오기 (ISO 형식으로)
   const today = new Date().toISOString().split("T")[0];
-
+  function send() {
+    axios.post(`${url}/calender/save/${selectedDate}`, {
+      content: content,
+    });
+  }
   useEffect(() => {
     axios.get(`${url}/calender/${selectedDate}`).then((res) => {
       setMemos(res.data);
@@ -49,7 +54,7 @@ export default function CalendarScreen() {
           return <Memo key={v.id} memo={v} />;
         })}
       </View>
-      <WhiteButton label={"+"} />
+      <WhiteButton onPress={send} label={"+"} />
     </View>
   );
 }
