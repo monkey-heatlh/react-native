@@ -26,8 +26,7 @@ export default function MakeRoutine() {
     const fetchToken = async () => {
       const token = await AsyncStorage.getItem("token");
       if (token) {
-        const parsedToken = JSON.parse(token);
-        setAccessToken(parsedToken.accessToken);
+        setAccessToken(token);
       }
     };
     fetchToken();
@@ -72,7 +71,7 @@ export default function MakeRoutine() {
           },
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`,
+              Authorization: accessToken,
             },
           }
         );
@@ -117,7 +116,7 @@ export default function MakeRoutine() {
         <WhiteBtn label="뒤로" onPress={handlePrevDay} />
         <PurpleBtn
           label={currentDay === "금" ? "확인" : "다음"}
-          onPress={handleNextDay}
+          onPress={currentDay === "금" ? send : handleNextDay}
           Btnstyle={true}
         />
       </View>
