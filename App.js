@@ -14,6 +14,7 @@ import CalendarScreen from "./src/calender";
 
 export default function App() {
   const Stack = createStackNavigator();
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -57,17 +58,17 @@ export default function App() {
           component={Main}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="signup"
+          component={SignUp}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="signup2"
+          component={SignUp2}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
-      <Stack.Screen
-        name="signup2"
-        component={SignUp2}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="signup"
-        component={SignUp}
-        options={{ headerShown: false }}
-      />
     </NavigationContainer>
   );
 }
