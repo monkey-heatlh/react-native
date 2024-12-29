@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Modal, TextInput } from "react-native";
 import { Calendar } from "react-native-calendars";
 import GoBack from "../components/goback";
 import Memo from "../components/memo";
 import WhiteButton from "../components/whiteBtn";
 import axios from "axios";
 import { url } from "../../config";
+import PurpleButton from "../components/purpleBtn";
 
 export default function CalendarScreen() {
   const [selectedDate, setSelectedDate] = useState("");
   const [memos, setMemos] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [content, setContent] = useState("");
 
   // 오늘 날짜를 가져오기 (ISO 형식으로)
@@ -54,7 +56,21 @@ export default function CalendarScreen() {
           return <Memo key={v.id} memo={v} />;
         })}
       </View>
-      <WhiteButton onPress={send} label={"+"} />
+      <WhiteButton onPress={() => setIsModalVisible(true)} label={"+"} />
+      <Modal visible={isModalVisible} animationType="slide">
+        <TextInput placeholder="무슨 메모를 작성하실건가요?" />
+        <View>
+          <WhiteButton
+            onPress={() => setIsModalVisible(false)}
+            label={"뒤로"}
+          />
+          <PurpleButton
+            onPress={send}
+            label={"저장"}
+            Btnstyle={content !== ""}
+          />
+        </View>
+      </Modal>
     </View>
   );
 }
