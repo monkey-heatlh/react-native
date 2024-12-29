@@ -97,7 +97,10 @@ export default function Main({ route }) {
         </View>
       </View>
       {error ? (
-        <WhiteBtn label={"루틴 설정하기"} />
+        <WhiteBtn
+          onPress={() => navigation.navigate("makeRoutine")}
+          label={"루틴 설정하기"}
+        />
       ) : (
         <View style={style.contentContainer}>
           <Text style={style.todayContent}>{todayContent}</Text>
