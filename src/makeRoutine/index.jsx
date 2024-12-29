@@ -62,7 +62,7 @@ export default function MakeRoutine() {
     try {
       if (accessToken) {
         await axios.post(
-          `${url}/save`,
+          `${url}/routine/save`,
           {
             monday_content: selectedValues.월,
             tuesday_content: selectedValues.화,
