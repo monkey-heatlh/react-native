@@ -44,9 +44,6 @@ export default function CalendarScreen() {
           },
         }}
       />
-      {selectedDate ? (
-        <Text style={styles.date}>선택된 날짜: {selectedDate}</Text>
-      ) : null}
       <View>
         {memos.map((v) => {
           return <Memo key={v.id} memo={v} />;
