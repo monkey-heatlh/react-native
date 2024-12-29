@@ -45,12 +45,25 @@ export default function Main({ route }) {
 
   useEffect(() => {
     if (data) {
-      const weekDays = ["월요일", "화요일", "수요일", "목요일", "금요일"];
-      const today = new Date().getDay();
-      const todayKey = `${weekDays[today]} | ${
-        data[`${weekDays[today].toLowerCase()}Content`]
-      }`;
-      setTodayContent(todayKey || "오늘은 설정된 루틴이 없습니다.");
+      // 요일 배열을 일요일부터 시작
+      const weekDays = [
+        "일요일",
+        "월요일",
+        "화요일",
+        "수요일",
+        "목요일",
+        "금요일",
+        "토요일",
+      ];
+      const today = new Date().getDay(); // 오늘 요일 (0: 일요일, 1: 월요일, ...)
+
+      // 해당 요일의 루틴 키 가져오기
+      const todayContentKey = `${weekDays[today].toLowerCase()}Content`;
+
+      // 데이터에서 해당 키의 내용을 가져옵니다.
+      const todayRoutine =
+        data[todayContentKey] || "오늘은 설정된 루틴이 없습니다.";
+      setTodayContent(todayRoutine);
     }
   }, [data]);
 
