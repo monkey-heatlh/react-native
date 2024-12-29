@@ -102,7 +102,7 @@ export default function Main({ route }) {
           label={"루틴 설정하기"}
         />
       ) : (
-        <View style={style.contentContainer}>
+        <View style={style.miniContainer}>
           <Text style={style.todayContent}>{todayContent}</Text>
         </View>
       )}
