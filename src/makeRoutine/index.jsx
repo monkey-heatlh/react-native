@@ -84,7 +84,7 @@ export default function MakeRoutine() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{currentDay}</Text>
+      <Text style={styles.label}>{currentDay + "요일"}</Text>
       <RNPickerSelect
         onValueChange={handleValueChange}
         items={[
@@ -111,12 +111,14 @@ export default function MakeRoutine() {
           />
         )}
       />
-      <WhiteBtn label="뒤로" onPress={handlePrevDay} />
-      <PurpleBtn
-        label={currentDay === "금" ? "확인" : "다음"}
-        onPress={handleNextDay}
-        Btnstyle={true}
-      />
+      <View style={styles.buttonWrapper}>
+        <WhiteBtn label="뒤로" onPress={handlePrevDay} />
+        <PurpleBtn
+          label={currentDay === "금" ? "확인" : "다음"}
+          onPress={handleNextDay}
+          Btnstyle={true}
+        />
+      </View>
     </View>
   );
 }
@@ -124,26 +126,31 @@ export default function MakeRoutine() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-around",
     padding: 20,
     alignItems: "center",
     gap: 20,
   },
   label: {
-    fontSize: 16,
+    fontSize: 28,
     marginVertical: 10,
+    fontWeight: 600,
   },
   input: {
     fontSize: 16,
     borderWidth: 1,
     borderColor: "#777",
-    padding: 10,
+    padding: 20,
     borderRadius: 5,
     paddingRight: 30,
   },
   icon: {
     position: "absolute",
     right: 10,
-    top: 10,
+    top: 20,
+  },
+  buttonWrapper: {
+    width: "100%",
+    gap: 10,
   },
 });
