@@ -1,6 +1,8 @@
+import { useNavigation } from "@react-navigation/native";
 import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 export default function GoBack() {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity style={style.goBack} onPress={() => navigation.goBack()}>
       <Image style={style.icon} source={require("../images/leftArrow.png")} />
