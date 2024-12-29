@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     gap: 150,
+    backgroundColor: "#fff",
   },
   label: {
     fontSize: 28,
