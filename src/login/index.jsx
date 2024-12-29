@@ -18,7 +18,7 @@ export default function Login() {
   function Login() {
     if (emailError || passwordError) return;
     axios
-      .post(`${url}/login`, {
+      .post(`${url}/auth/login`, {
         email: email,
         password: password,
       })
@@ -70,7 +70,7 @@ export default function Login() {
       <PurpleBtn
         label={"로그인"}
         onPress={Login}
-        Btnstyle={emailError || passwordError}
+        Btnstyle={!emailError || passwordError}
       />
     </View>
   );
