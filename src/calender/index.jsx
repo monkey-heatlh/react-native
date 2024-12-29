@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, Modal, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Modal,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { Calendar } from "react-native-calendars";
 import GoBack from "../components/goback";
 import Memo from "../components/memo";
-import WhiteButton from "../components/whiteBtn";
 import axios from "axios";
 import { url } from "../../config";
-import PurpleButton from "../components/purpleBtn";
+import WhiteButton from "../components/whiteBtn";
 
 export default function CalendarScreen() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -22,7 +28,6 @@ export default function CalendarScreen() {
       axios
         .post(`${url}/calender/save/${selectedDate}`, { content })
         .then(() => {
-          // 저장 후 초기화 및 목록 갱신
           setContent("");
           setIsModalVisible(false);
           axios.get(`${url}/calender/${selectedDate}`).then((res) => {
@@ -42,6 +47,72 @@ export default function CalendarScreen() {
     }
   }, [selectedDate]);
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: "#fff",
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // 반투명 배경
+      padding: 10,
+    },
+    modalContent: {
+      width: "80%",
+      padding: 20,
+      backgroundColor: "#fff",
+      borderRadius: 10,
+    },
+    title: {
+      fontSize: 20,
+      marginBottom: 20,
+      textAlign: "center",
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: "#ccc",
+      borderRadius: 5,
+      padding: 10,
+      marginBottom: 20,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      width: "100%",
+      gap: 10,
+    },
+    WhiteBtn: {
+      paddingHorizontal: "auto",
+      paddingVertical: 16,
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#FFFFFF",
+      borderWidth: 1,
+      borderColor: "#902BE9",
+      width: "50%",
+    },
+    WhiteBtnLabel: {
+      color: "#902BE9",
+      fontSize: 16,
+    },
+    PurpleBtn: {
+      backgroundColor: content !== "" ? "#902BE9" : "#690ED4",
+      paddingHorizontal: "auto",
+      paddingVertical: 16,
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "center",
+      width: "50%",
+    },
+    PurpleBtnLabel: {
+      color: content !== "" ? "#FFFFFF" : "#C5C5C5",
+      fontSize: 16,
+    },
+  });
   return (
     <View style={styles.container}>
       <GoBack />
@@ -82,15 +153,15 @@ export default function CalendarScreen() {
               onChangeText={setContent}
             />
             <View style={styles.buttonContainer}>
-              <WhiteButton
+              <TouchableOpacity
+                style={styles.WhiteBtn}
                 onPress={() => setIsModalVisible(false)}
-                label={"뒤로"}
-              />
-              <PurpleButton
-                onPress={send}
-                label={"저장"}
-                Btnstyle={content !== ""}
-              />
+              >
+                <Text style={styles.WhiteBtnLabel}>뒤로</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.PurpleBtn} onPress={send}>
+                <Text style={styles.PurpleBtnLabel}>저장</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -98,40 +169,3 @@ export default function CalendarScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#fff",
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // 반투명 배경
-  },
-  modalContent: {
-    width: "80%",
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 20,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-});
