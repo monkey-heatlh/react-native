@@ -23,7 +23,7 @@ export default function Login() {
         password: password,
       })
       .then((res) => {
-        AsyncStorage.setItem("token", res.data.token);
+        AsyncStorage.setItem("token", res.data.token.accessToken);
         navigation.navigate("main", { email: email });
       })
       .catch((err) => {
