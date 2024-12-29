@@ -6,12 +6,13 @@ import axios from "axios";
 import { url } from "../../config";
 import { useNavigation } from "@react-navigation/native";
 
-export default function SignUp2({ email }) {
+export default function SignUp2({ route }) {
+  const { email } = route.params;
   const navigation = useNavigation();
   function signUp() {
     if (error) return;
     axios
-      .post(`${url}/signup`, {
+      .post(`${url}/auth/signup`, {
         email: email,
         password: password,
       })
@@ -54,7 +55,7 @@ export default function SignUp2({ email }) {
           }}
         />
       </View>
-      <PurpleBTn label="확인" onPress={signUp} Btnstyle={error} />
+      <PurpleBTn label="확인" onPress={signUp} Btnstyle={!error} />
     </View>
   );
 }
