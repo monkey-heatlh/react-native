@@ -11,7 +11,7 @@ import PurpleBtn from "../components/purpleBtn";
 export default function SignUp() {
   const [active, setActive] = useState(false);
   const [email, setEmail] = useState("");
-  const [next, setNext] = useState(true);
+  const [next, setNext] = useState(false);
   const [certification, setCertification] = useState("");
   const [Btnstyle, setStyle] = useState(false);
 
@@ -25,10 +25,19 @@ export default function SignUp() {
       return;
     }
     axios
-      .post(`${url}/send-code`, {
-        email: email,
-      })
+      .post(
+        `${url}/auth/send-code`,
+        {
+          email: email,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((res) => {
+        console.log(res.message);
         setNext(true);
       })
       .catch((err) => {
@@ -38,7 +47,7 @@ export default function SignUp() {
 
   function check() {
     axios
-      .post(`${url}/check-code`, {
+      .post(`${url}/auth/verify-code`, {
         email: email,
         code: certification,
       })
@@ -72,7 +81,7 @@ export default function SignUp() {
         {next && (
           <TextInput
             onChangeText={(e) => {
-              setCertification(e.target.value);
+              setCertification(e);
               setStyle(true);
             }}
             placeholder="인증번호 입력"
@@ -81,7 +90,11 @@ export default function SignUp() {
         )}
         {next && <Text style={style.warn}>타인에게 공유하면 위험해요!!</Text>}
       </View>
-      <PurpleBtn style={Btnstyle} label={"동의하고 시작하기"} onPress={check} />
+      <PurpleBtn
+        Btnstyle={Btnstyle}
+        label={"동의하고 시작하기"}
+        onPress={check}
+      />
     </View>
   );
 }
