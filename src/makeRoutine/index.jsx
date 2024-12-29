@@ -8,6 +8,7 @@ import axios from "axios";
 import { url } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import GoBack from "../components/goback";
+import { useNavigation } from "@react-navigation/native";
 
 const days = {
   월: "",
@@ -22,6 +23,7 @@ export default function MakeRoutine() {
   const [currentDay, setCurrentDay] = useState("월");
   const [accessToken, setAccessToken] = useState(null);
 
+  const navigation = useNavigation();
   useEffect(() => {
     const fetchToken = async () => {
       const token = await AsyncStorage.getItem("token");
@@ -76,6 +78,7 @@ export default function MakeRoutine() {
           }
         );
         console.log("데이터 저장 완료");
+        navigation.navigate("main");
       }
     } catch (error) {
       console.error("전송 오류:", error);
