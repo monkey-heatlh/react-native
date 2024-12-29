@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Calendar } from "react-native-calendars";
 import GoBack from "../components/goback";
+import Memo from "../components/memo";
+import WhiteButton from "../components/whiteBtn";
+import axios from "axios";
+import { url } from "../../config";
 
 export default function CalendarScreen() {
   const [selectedDate, setSelectedDate] = useState("");
+  const [memos, setMemos] = useState([]);
 
   // 오늘 날짜를 가져오기 (ISO 형식으로)
   const today = new Date().toISOString().split("T")[0];
 
+  useEffect(() => {
+    axios.get(`${url}/calender/${selectedDate}`).then((res) => {
+      setMemos(res.data);
+    });
+  }, [selectedDate]);
   return (
     <View style={styles.container}>
       <GoBack />
       <Calendar
+        style={{ marginTop: 20 }}
         theme={{
           arrowColor: "#902BE9", // 화살표 색상
         }}
@@ -36,6 +47,8 @@ export default function CalendarScreen() {
       {selectedDate ? (
         <Text style={styles.date}>선택된 날짜: {selectedDate}</Text>
       ) : null}
+      <View>{}</View>
+      <WhiteButton label={"+"} />
     </View>
   );
 }
