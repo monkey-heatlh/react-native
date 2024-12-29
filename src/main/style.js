@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 
 export const style = StyleSheet.create({
   Container: {
-    marginTop: 24,
     flex: 1,
     justifyContent: "start",
     alignItems: "left",
@@ -11,6 +10,7 @@ export const style = StyleSheet.create({
     gap: 20,
   },
   header: {
+    marginTop: 25,
     flex: 0.1,
     justifyContent: "space-between",
     flexDirection: "row",
