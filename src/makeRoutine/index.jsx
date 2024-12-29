@@ -7,6 +7,7 @@ import WhiteBtn from "../components/whiteBtn";
 import axios from "axios";
 import { url } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import GoBack from "../components/goback";
 
 const days = {
   월: "",
@@ -84,6 +85,7 @@ export default function MakeRoutine() {
 
   return (
     <View style={styles.container}>
+      <GoBack />
       <Text style={styles.label}>{currentDay + "요일"}</Text>
       <RNPickerSelect
         onValueChange={handleValueChange}
@@ -126,10 +128,10 @@ export default function MakeRoutine() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: "start",
     padding: 20,
     alignItems: "center",
-    gap: 20,
+    gap: 150,
   },
   label: {
     fontSize: 28,
