@@ -13,6 +13,7 @@ import Memo from "../components/memo";
 import axios from "axios";
 import { url } from "../../config";
 import WhiteButton from "../components/whiteBtn";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function CalendarScreen() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -22,28 +23,61 @@ export default function CalendarScreen() {
 
   const today = new Date().toISOString().split("T")[0];
 
-  // 메모 저장 함수
-  const send = () => {
-    if (selectedDate && content) {
-      axios
-        .post(`${url}/calender/save/${selectedDate}`, { content })
-        .then(() => {
-          setContent("");
-          setIsModalVisible(false);
-          axios.get(`${url}/calender/${selectedDate}`).then((res) => {
-            setMemos(res.data);
-          });
-        })
-        .catch((err) => console.error(err));
+  // 토큰 가져오기 함수
+  const getToken = async () => {
+    try {
+      return await AsyncStorage.getItem("token");
+    } catch (err) {
+      console.error("토큰 가져오기 실패:", err);
+      return null;
     }
   };
 
-  // 선택된 날짜의 메모 가져오기
+  // 메모 저장 함수
+  const send = async () => {
+    if (selectedDate && content) {
+      try {
+        const token = await getToken();
+        console.log(token);
+        if (token) {
+          await axios.post(
+            `${url}/calendar/save/${selectedDate}`,
+            { content: content },
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+          setContent("");
+          setIsModalVisible(false);
+          fetchMemos(selectedDate);
+        }
+      } catch (err) {
+        console.error("메모 저장 실패:", err);
+      }
+    }
+  };
+
+  const fetchMemos = async (date) => {
+    try {
+      const token = await getToken();
+      if (token) {
+        const response = await axios.get(`${url}/calendar/${date}`, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setMemos(response.data);
+      }
+    } catch (err) {
+      console.error("메모 가져오기 실패:", err);
+    }
+  };
+
   useEffect(() => {
     if (selectedDate) {
-      axios.get(`${url}/calender/${selectedDate}`).then((res) => {
-        setMemos(res.data);
-      });
+      fetchMemos(selectedDate);
     }
   }, [selectedDate]);
 
@@ -113,6 +147,7 @@ export default function CalendarScreen() {
       fontSize: 16,
     },
   });
+
   return (
     <View style={styles.container}>
       <GoBack />
@@ -159,7 +194,11 @@ export default function CalendarScreen() {
               >
                 <Text style={styles.WhiteBtnLabel}>뒤로</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.PurpleBtn} onPress={send}>
+              <TouchableOpacity
+                style={styles.PurpleBtn}
+                onPress={send}
+                disabled={content === ""}
+              >
                 <Text style={styles.PurpleBtnLabel}>저장</Text>
               </TouchableOpacity>
             </View>
