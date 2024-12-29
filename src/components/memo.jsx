@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Memo() {
+export default function Memo(memo) {
   return (
     <View style={styles.container}>
-      <Text>오늘 상체를 해야하는데 제대로 못했어!@@@@@@@@@@@@@@@</Text>
+      <Text>{memo.content}</Text>
     </View>
   );
 }
