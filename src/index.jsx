@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 20,
   },
   Logo: {
     width: 260,
@@ -40,5 +41,6 @@ const styles = StyleSheet.create({
   BtnWrapper: {
     flexDirection: "column",
     gap: 12,
+    width: "100%",
   },
 });
