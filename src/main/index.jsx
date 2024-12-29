@@ -45,15 +45,7 @@ export default function Main({ email }) {
 
   useEffect(() => {
     if (data) {
-      const weekDays = [
-        "일요일",
-        "월요일",
-        "화요일",
-        "수요일",
-        "목요일",
-        "금요일",
-        "토요일",
-      ];
+      const weekDays = ["월요일", "화요일", "수요일", "목요일", "금요일"];
       const today = new Date().getDay();
       const todayKey = `${weekDays[today]} | ${
         data[`${weekDays[today].toLowerCase()}Content`]
