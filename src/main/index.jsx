@@ -1,4 +1,4 @@
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { style } from "./style";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -72,11 +72,13 @@ export default function Main({ email }) {
           resizeMode="contain"
           source={require("../images/textlogo.png")}
         />
-        <Image
-          resizeMode="contain"
-          style={style.icon}
-          source={require("../images/setting.png")}
-        />
+        <TouchableOpacity onPress={() => navigation.navigate("calender")}>
+          <Image
+            resizeMode="contain"
+            style={style.icon}
+            source={require("../images/calender.png")}
+          />
+        </TouchableOpacity>
       </View>
       <View>
         <Text style={style.smallTitle}>집에서 편하게</Text>
