@@ -18,6 +18,7 @@ export default function Start() {
           onPress={() => navigation.navigate("signup")}
         />
         <PurpleBtn
+          Btnstyle={true}
           label="로그인"
           onPress={() => navigation.navigate("login")}
         />
