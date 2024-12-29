@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, Text } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { Ionicons } from "@expo/vector-icons";
 import PurpleBtn from "../components/purpleBtn";
 import WhiteBtn from "../components/whiteBtn";
+import axios from "axios";
+import { url } from "../../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const days = {
   월: "",
@@ -16,6 +19,18 @@ const days = {
 export default function MakeRoutine() {
   const [selectedValues, setSelectedValues] = useState(days);
   const [currentDay, setCurrentDay] = useState("월");
+  const [accessToken, setAccessToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        const parsedToken = JSON.parse(token);
+        setAccessToken(parsedToken.accessToken);
+      }
+    };
+    fetchToken();
+  }, []);
 
   const handleValueChange = (value) => {
     if (value) {
@@ -25,16 +40,45 @@ export default function MakeRoutine() {
       }));
     }
   };
+
   const handlePrevDay = () => {
     const prevDayIndex = Object.keys(days).indexOf(currentDay) - 1;
     if (prevDayIndex >= 0) {
       setCurrentDay(Object.keys(days)[prevDayIndex]);
     }
   };
+
   const handleNextDay = () => {
     const nextDayIndex = Object.keys(days).indexOf(currentDay) + 1;
     if (nextDayIndex < Object.keys(days).length) {
       setCurrentDay(Object.keys(days)[nextDayIndex]);
+    } else {
+      send();
+    }
+  };
+
+  const send = async () => {
+    try {
+      if (accessToken) {
+        await axios.post(
+          `${url}/save`,
+          {
+            monday_content: selectedValues.월,
+            tuesday_content: selectedValues.화,
+            wednesday_content: selectedValues.수,
+            thursday_content: selectedValues.목,
+            friday_content: selectedValues.금,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log("데이터 저장 완료");
+      }
+    } catch (error) {
+      console.error("전송 오류:", error);
     }
   };
 
