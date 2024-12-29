@@ -22,10 +22,9 @@ export default function Main({ route }) {
       try {
         const token = await AsyncStorage.getItem("token");
         if (token) {
-          const parsedToken = JSON.parse(token);
-          const response = await axios.get(`${url}/read`, {
+          const response = await axios.get(`${url}/routine/read`, {
             headers: {
-              Authorization: parsedToken.accessToken,
+              Authorization: token,
             },
           });
           setData(response.data);
