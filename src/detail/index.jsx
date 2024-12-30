@@ -4,7 +4,8 @@ import { style } from "./style";
 import PurpleBtn from "../components/purpleBtn";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Detail({ exercise }) {
+export default function Detail({ route }) {
+  const { exercise } = route.params;
   const navigation = useNavigation();
   const Bool = exercise === "가슴";
   return (
