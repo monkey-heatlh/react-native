@@ -32,6 +32,9 @@ export default function CameraScreen() {
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={styles.text}>Take Picture</Text>
+          </TouchableOpacity>
         </View>
       </CameraView>
     </View>
