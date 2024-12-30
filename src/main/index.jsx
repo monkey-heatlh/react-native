@@ -28,7 +28,6 @@ export default function Main({ route }) {
             },
           });
           setData(response.data);
-          console.log(response.data);
         }
       } catch (err) {
         setError(true);
