@@ -1,10 +1,24 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import axios from "axios";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { url } from "../../config";
 
-export default function Memo({ memo }) {
+export default function Memo({ token, memo }) {
   return (
     <View style={styles.container}>
       <Text style={styles.memoText}>{memo.content || "불러오기 실패"}</Text>
-      <Image source={require("../images/delete.png")} style={styles.icon} />
+      <TouchableOpacity
+        onPress={() => {
+          axios
+            .delete(`${url}/calendar/${memo.date}/${memo.id}`, {
+              headers: {
+                Authorization: token,
+              },
+            })
+            .catch((err) => console.error(err));
+        }}
+      >
+        <Image source={require("../images/delete.png")} style={styles.icon} />
+      </TouchableOpacity>
     </View>
   );
 }
