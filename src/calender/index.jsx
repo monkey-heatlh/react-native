@@ -38,7 +38,6 @@ export default function CalendarScreen() {
     if (selectedDate && content) {
       try {
         const token = await getToken();
-        console.log(token);
         if (token) {
           await axios.post(
             `${url}/calendar/save/${selectedDate}`,
@@ -59,6 +58,7 @@ export default function CalendarScreen() {
     }
   };
 
+  // 메모 가져오기 함수
   const fetchMemos = async (date) => {
     try {
       const token = await getToken();
@@ -91,7 +91,7 @@ export default function CalendarScreen() {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "rgba(0, 0, 0, 0.5)", // 반투명 배경
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
       padding: 10,
     },
     modalContent: {
