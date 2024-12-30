@@ -14,6 +14,7 @@ import axios from "axios";
 import { url } from "../../config";
 import WhiteButton from "../components/whiteBtn";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CalendarScreen() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -53,7 +54,7 @@ export default function CalendarScreen() {
           fetchMemos(selectedDate);
         }
       } catch (err) {
-        console.error("메모 저장 실패:", err);
+        setIsModalVisible(false);
       }
     }
   };
