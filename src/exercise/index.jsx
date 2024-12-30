@@ -1,4 +1,4 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { style } from "./style";
 import Select from "../components/select";
 import { useState } from "react";
