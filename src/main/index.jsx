@@ -115,9 +115,12 @@ export default function Main({ route }) {
           label={"루틴 설정하기"}
         />
       ) : (
-        <View style={style.miniContainer}>
+        <TouchableOpacity
+          style={style.miniContainer}
+          onPress={() => navigation.navigate("makeRoutine")}
+        >
           <Text style={style.todayContent}>{todayContent}</Text>
-        </View>
+        </TouchableOpacity>
       )}
       <PurpleBtn
         label={"맨몸운동 하러가기"}
