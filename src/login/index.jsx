@@ -57,6 +57,7 @@ export default function Login() {
               setPassword(text);
               setPasswordError(false);
             }}
+            secureTextEntry={true}
             style={styles.input}
             placeholder="비밀번호를 입력해주세요"
           />

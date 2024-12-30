@@ -33,6 +33,7 @@ export default function SignUp2({ route }) {
       <View style={style.inputWrap}>
         <Text style={style.label}>비밀번호</Text>
         <TextInput
+          secureTextEntry={true}
           onChangeText={(text) => {
             setPassword(text);
             setError(false);
@@ -44,6 +45,7 @@ export default function SignUp2({ route }) {
       <View style={style.inputWrap}>
         <Text style={style.label}>비밀번호 확인</Text>
         <TextInput
+          secureTextEntry={true}
           onChangeText={(text) => {
             setPasswordCheck(text);
             setError(password !== text);
