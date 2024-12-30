@@ -9,7 +9,7 @@ import PurpleBtn from "../components/purpleBtn";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Main({ route }) {
-  const { email } = route.params;
+  const { email } = route.params || {};
   const [data, setData] = useState(null);
   const [dateTime, setDateTime] = useState(new Date());
   const [error, setError] = useState(false);
