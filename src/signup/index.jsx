@@ -25,17 +25,9 @@ export default function SignUp() {
       return;
     }
     axios
-      .post(
-        `${url}/auth/send-code`,
-        {
-          email: email,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post(`${url}/auth/send-code`, {
+        email: email,
+      })
       .then((res) => {
         console.log(res.message);
         setNext(true);
