@@ -28,6 +28,7 @@ export default function Main({ route }) {
             },
           });
           setData(response.data);
+          console.log(response.data);
         }
       } catch (err) {
         setError(true);
@@ -45,25 +46,28 @@ export default function Main({ route }) {
 
   useEffect(() => {
     if (data) {
-      // 요일 배열을 일요일부터 시작
-      const weekDays = [
-        "일요일",
-        "월요일",
-        "화요일",
-        "수요일",
-        "목요일",
-        "금요일",
-        "토요일",
+      // 월요일부터 금요일까지만 요일 배열과 루틴 키 설정
+      const weekDays = ["월", "화", "수", "목", "금"];
+      const routineKeys = [
+        "mondayContent", // 월요일
+        "tuesdayContent", // 화요일
+        "wednesdayContent", // 수요일
+        "thursdayContent", // 목요일
+        "fridayContent", // 금요일
       ];
+
       const today = new Date().getDay(); // 오늘 요일 (0: 일요일, 1: 월요일, ...)
-
-      // 해당 요일의 루틴 키 가져오기
-      const todayContentKey = `${weekDays[today].toLowerCase()}Content`;
-
-      // 데이터에서 해당 키의 내용을 가져옵니다.
-      const todayRoutine =
-        data[todayContentKey] || "오늘은 설정된 루틴이 없습니다.";
-      setTodayContent(todayRoutine);
+      if (today >= 1 && today <= 5) {
+        // 평일이면 해당 루틴 설정
+        const todayContentKey = routineKeys[today - 1];
+        const todayRoutine = data[todayContentKey]
+          ? `${weekDays[today - 1]}  |  ${data[todayContentKey]}`
+          : `${weekDays[today - 1]}  |  오늘은 설정된 루틴이 없습니다.`;
+        setTodayContent(todayRoutine);
+      } else {
+        // 주말이면 기본 메시지
+        setTodayContent("주말은 루틴이 없습니다.");
+      }
     }
   }, [data]);
 
