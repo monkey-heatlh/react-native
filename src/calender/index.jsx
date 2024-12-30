@@ -48,12 +48,14 @@ export default function CalendarScreen() {
               },
             }
           );
-          setContent("");
-          setIsModalVisible(false);
-          fetchMemos(selectedDate);
         }
+        setContent("");
+        setIsModalVisible(false);
+        fetchMemos(selectedDate);
       } catch (err) {
         setIsModalVisible(false);
+        setContent("");
+        fetchMemos(selectedDate);
       }
     }
   };
