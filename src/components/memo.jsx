@@ -35,9 +35,7 @@ export default function Memo({ memo }) {
             Authorization: token,
           },
         });
-      } catch (err) {
-        console.error("삭제 실패:", err);
-      }
+      } catch (err) {}
     }
     setIsModalVisible(false);
   };
