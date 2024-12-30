@@ -174,7 +174,7 @@ export default function CalendarScreen() {
       />
       <View>
         {memos.map((memo) => (
-          <Memo token={getToken} key={memo.id} memo={memo} />
+          <Memo key={memo.id} memo={memo} />
         ))}
       </View>
       <WhiteButton onPress={() => setIsModalVisible(true)} label={"+"} />

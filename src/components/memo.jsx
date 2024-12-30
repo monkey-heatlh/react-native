@@ -1,22 +1,42 @@
-import axios from "axios";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { url } from "../../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Memo({ token, memo }) {
+export default function Memo({ memo }) {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const tokenFromStorage = await AsyncStorage.getItem("token");
+        setToken(tokenFromStorage);
+      } catch (err) {
+        console.error("토큰 가져오기 실패:", err);
+      }
+    };
+    fetchToken();
+  }, []);
+
+  const handleDelete = async () => {
+    if (token) {
+      try {
+        await axios.delete(`${url}/calendar/delete/${memo.date}/${memo.id}`, {
+          headers: {
+            Authorization: token,
+          },
+        });
+      } catch (err) {
+        console.error("삭제 실패:", err);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.memoText}>{memo.content || "불러오기 실패"}</Text>
-      <TouchableOpacity
-        onPress={() => {
-          axios
-            .delete(`${url}/calendar/${memo.date}/${memo.id}`, {
-              headers: {
-                Authorization: token,
-              },
-            })
-            .catch((err) => console.error(err));
-        }}
-      >
+      <TouchableOpacity onPress={handleDelete}>
         <Image source={require("../images/delete.png")} style={styles.icon} />
       </TouchableOpacity>
     </View>
