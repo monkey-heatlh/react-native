@@ -1,6 +1,7 @@
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { useState } from "react";
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import GoBack from "../components/goback";
 
 export default function CameraScreen() {
   const [facing, setFacing] = useState("front");
@@ -13,6 +14,7 @@ export default function CameraScreen() {
   if (!permission.granted) {
     return (
       <View style={styles.container}>
+        <GoBack />
         <Text style={styles.message}>
           We need your permission to show the camera
         </Text>
